@@ -1,0 +1,54 @@
+{
+    "transactions": [
+        {
+            "id": 1,
+            "name": "Transaction 1",
+            "price": 10000
+        },
+        {
+            "id": 2,
+            "name": "Transaction 2",
+            "price": 20000
+        },
+        {
+            "id": 3,
+            "name": "Transaction 3",
+            "price": 30000
+        },
+        {
+            "id": 4,
+            "name": "Transaction 4",
+            "price": 40000
+        },
+        {
+            "id": 5,
+            "name": "Transaction 5",
+            "price": 50000
+        },
+        {
+            "id": 6,
+            "name": "Transaction 6",
+            "price": 60000
+        },
+        {
+            "id": 7,
+            "name": "Transaction 7",
+            "price": 70000
+        },
+        {
+            "id": 8,
+            "name": "Transaction 8",
+            "price": 80000
+        },
+        {
+            "id": 9,
+            "name": "Transaction 9",
+            "price": 90000
+        },
+        {
+            "id": 10,
+            "name": "Transaction 10",
+            "price": 100000
+        }
+    ]
+}
