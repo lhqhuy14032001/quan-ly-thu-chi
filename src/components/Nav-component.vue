@@ -8,17 +8,13 @@
       </li>
       <li><router-link :to="{ name: 'HomePage' }">Home Page</router-link></li>
       <li>
-        <router-link :to="{ name: 'Transactions' }"
-          >Transactions List</router-link
-        >
+        <router-link :to="{ name: 'Register' }">Transactions List</router-link>
       </li>
     </ul>
   </nav>
 </template>
 
-<script>
-export default {};
-</script>
+<script></script>
 
 <style lang="css" scoped>
 .navbar {
