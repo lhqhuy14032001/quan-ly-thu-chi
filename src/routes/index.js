@@ -20,6 +20,7 @@ const routes = [
     meta: {
       text: "Le Hoang Quoc Huy",
       leading: true,
+      isShowNavigationBottom: true,
     },
     component: HomePage,
   },
@@ -46,6 +47,7 @@ const routes = [
     meta: {
       text: "Profile",
       leading: false,
+      isShowNavigationBottom: true,
     },
     component: Profile,
     beforeEnter: requireAuth,
@@ -61,6 +63,7 @@ const routes = [
     meta: {
       text: "Report",
       leading: false,
+      isShowNavigationBottom: true,
     },
     component: Report,
   },
@@ -70,6 +73,7 @@ const routes = [
     meta: {
       text: "Budget",
       leading: false,
+      isShowNavigationBottom: true,
     },
     component: Budget,
   },
@@ -77,8 +81,9 @@ const routes = [
     path: "/new-transaction",
     name: "NewTransaction",
     meta: {
-      text: "Add a new transaction",
+      text: "New transaction",
       leading: false,
+      isShowNavigationBottom: false,
     },
     component: newTransaction,
   },
