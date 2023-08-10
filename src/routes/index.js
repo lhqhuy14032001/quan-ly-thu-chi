@@ -9,6 +9,7 @@ import {
   Report,
   Budget,
   newTransaction,
+  transactionDetail,
 } from "@/routes/importComponent";
 
 import { requireAuth, preventAccessToLogin } from "./middlewares";
@@ -86,6 +87,16 @@ const routes = [
       isShowNavigationBottom: false,
     },
     component: newTransaction,
+  },
+  {
+    path: "/transaction-detail/:id",
+    name: "TransactionDetail",
+    meta: {
+      text: "Transaction Detail",
+      leading: false,
+      isShowNavigationBottom: true,
+    },
+    component: transactionDetail,
   },
 ];
 

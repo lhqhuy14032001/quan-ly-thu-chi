@@ -1,4 +1,14 @@
 <template>
+  <div class="row px-8" v-if="!isValid.state">
+    <div class="text-red mx-auto mt-3 font-semibold text-lg">
+      {{ isValid.message }}
+    </div>
+  </div>
+  <div class="row px-8" v-else>
+    <div class="text-green mx-auto mt-3 font-semibold text-lg">
+      {{ isValid.message }}
+    </div>
+  </div>
   <form @submit.prevent="onSubmit">
     <!-- Start: Main form -->
     <div class="row mt-8">
@@ -9,11 +19,11 @@
               <div class="w-10 text-right leading-10 mr-4 pb-1">
                 <span
                   class="inline-block px-1 text-dark border border-dark rounded text-sm font-bold"
-                  >USD</span
+                  >VND</span
                 >
               </div>
               <div class="flex flex-col border-b border-gray-100 pb-1">
-                <span class="font-semibold text-xs text-dark">Total</span>
+                <span class="font-semibold text-xs text-dark">Tổng tiền</span>
                 <input
                   class="text-4xl text-dark w-full outline-none mt-1"
                   type="text"
@@ -40,7 +50,7 @@
                   type="text"
                   name=""
                   id="category"
-                  placeholder="Select a category"
+                  placeholder="Nội dung chi tiêu"
                   v-model="category"
                 />
               </div>
@@ -61,7 +71,7 @@
                   type="text"
                   name=""
                   id="category"
-                  placeholder="Note"
+                  placeholder="Ghi chú"
                   v-model="note"
                 />
               </div>
@@ -75,12 +85,19 @@
                   <i class="t2ico t2ico-calendar text-2xl ml-auto"></i>
                 </span>
               </div>
-              <div class="w-full flex flex-col border-b border-gray-100 py-3">
-                <div class="text-dark w-full">{{ time }}</div>
+              <div class="w-full flex flex-col 0 py-3">
+                <div class="text-dark w-full date-picker">
+                  <VueDatePicker
+                    hide-input-icon
+                    placeholder="Ngày chi"
+                    :model-value="date"
+                    @update:model-value="handleDate"
+                  ></VueDatePicker>
+                </div>
               </div>
             </label>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <label for="wallet" class="flex items-center">
               <div class="flex-none w-10 mr-4">
                 <span class="flex items-center justify-end text-dark">
@@ -91,12 +108,13 @@
                 <div class="text-dark w-full">My Wallet</div>
               </div>
             </label>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <div class="row mt-8">
       <button
+        type="button"
         @click="isMoreDetailsShow = !isMoreDetailsShow"
         class="text-primary bg-white rounded-lg py-3 w-full font-semibold"
       >
@@ -125,6 +143,7 @@
                     name=""
                     id="location"
                     placeholder="Select a location"
+                    v-model="location"
                   />
                 </div>
               </label>
@@ -145,6 +164,7 @@
                     name=""
                     id="withPerson"
                     placeholder="With Person"
+                    v-model="withPerson"
                   />
                 </div>
               </label>
@@ -181,11 +201,6 @@
           </div>
         </div>
       </div>
-      <div class="row px-8" v-if="errorFile">
-        <div class="text-red mx-auto mt-3 font-semibold text-lg">
-          {{ errorFile }}
-        </div>
-      </div>
     </template>
     <button
       type="submit"
@@ -193,35 +208,35 @@
     >
       Add transaction
     </button>
+    <router-link
+      class="block text-center mt-10"
+      :to="{ name: 'HomePage', params: {} }"
+      >Về trang chủ</router-link
+    >
   </form>
-  <div class="row px-8" v-if="!isValid.state">
-    <div class="text-red mx-auto mt-3 font-semibold text-lg">
-      {{ isValid.message }}
-    </div>
-  </div>
-  <div class="row px-8" v-else>
-    <div class="text-green mx-auto mt-3 font-semibold text-lg">
-      {{ isValid.message }}
-    </div>
-  </div>
 </template>
 <script setup>
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import { useUser } from "@/composables/useUser";
 import { ref } from "vue";
 import useCollection from "@/composables/useCollection";
 import userStorage from "@/composables/useStorage";
+import { useRouter } from "vue-router";
 
 const { getUser } = useUser();
 let { user } = getUser();
-const { uploadFile, response } = userStorage("transactions");
+const { uploadFile, url } = userStorage("transactions");
 
 const { addNewRecord, error } = useCollection("transactions");
 
 let total = ref(0);
 let category = ref("");
-let time = ref(new Date());
+let date = ref(null);
 let note = ref("");
 let isMoreDetailsShow = ref(false);
+let location = ref(null);
+let withPerson = ref(null);
 let isValid = ref({
   state: false,
   message: "",
@@ -251,11 +266,6 @@ const validateForm = () => {
     isValid.value.message = "Category is require !!!";
     document.querySelector('label[for="category"]').classList.add("active");
     return false;
-  } else if (!note.value) {
-    isValid.value.state = false;
-    isValid.value.message = "Note is require !!!";
-    document.querySelector('label[for="note"]').classList.add("active");
-    return false;
   } else {
     document.querySelector("label").classList.remove("active");
     isValid.value.state = true;
@@ -263,17 +273,27 @@ const validateForm = () => {
     return true;
   }
 };
+
+const handleDate = (modelData) => {
+  const day = modelData.getDate();
+  const month = modelData.getMonth() + 1;
+  const year = modelData.getFullYear();
+  date.value = `${day}/${month}/${year}`;
+};
+const ROUTER = useRouter();
 const onSubmit = async () => {
   let validForm = validateForm();
   if (validForm) {
     if (file.value) await uploadFile(file.value);
-    console.log(response);
     let transaction = {
       total: total.value,
       category: category.value,
-      time: time.value,
-      note: note.value,
+      time: date.value,
+      note: note.value ? note.value : null,
       userID: user.value.uid,
+      thumnail: url.value,
+      location: location.value,
+      withPerson: withPerson.value,
     };
     await addNewRecord(transaction);
     if (error.value) {
@@ -283,6 +303,7 @@ const onSubmit = async () => {
     } else {
       isValid.value.state = true;
       isValid.value.message = "Created successfull!!!";
+      ROUTER.push({ name: "HomePage" });
     }
   }
 };

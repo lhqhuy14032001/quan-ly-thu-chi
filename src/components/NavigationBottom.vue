@@ -4,7 +4,7 @@
     class="fixed w-full bottom-0 left-0 pt-4 bg-white p-b-safe-4"
   >
     <div class="container mx-auto px-8 h-full">
-      <ul class="flex justify-between h-full items-center">
+      <ul class="flex justify-around h-full items-center">
         <li v-for="navItem in navItems" :key="navItem.name">
           <router-link :to="navItem.route">
             <i :class="navItem.icon" class="t2ico text-2xl"></i>
@@ -50,10 +50,10 @@ footer#footer > div[data-circle] > div[data-circle-inset] {
   content: "\e921";
   font-family: "t2ico";
 }
-footer#footer ul li:nth-child(2) {
+/* footer#footer ul li:nth-child(2) {
   margin-right: 10%;
 }
 footer#footer ul li:nth-child(3) {
   margin-left: 10%;
-}
+} */
 </style>

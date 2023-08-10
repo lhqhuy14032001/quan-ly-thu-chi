@@ -32,16 +32,16 @@ export const NAV_ITEMS = [
     name: "Category",
     route: { name: "HomePage", params: {} },
   },
-  {
-    icon: "t2ico-chart",
-    name: "Report",
-    route: { name: "Report", params: {} },
-  },
-  {
-    icon: "t2ico-presentation",
-    name: "Budget",
-    route: { name: "Budget", params: {} },
-  },
+  // {
+  //   icon: "t2ico-chart",
+  //   name: "Report",
+  //   route: { name: "Report", params: {} },
+  // },
+  // {
+  //   icon: "t2ico-presentation",
+  //   name: "Budget",
+  //   route: { name: "Budget", params: {} },
+  // },
   {
     icon: "t2ico-profile",
     name: "Profile",

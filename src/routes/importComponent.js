@@ -13,6 +13,10 @@ const Report = () => import(/* webpackChunkName: "report" */ "@/views/report");
 const Budget = () => import(/* webpackChunkName: "budget" */ "@/views/budget");
 const newTransaction = () =>
   import(/* webpackChunkName: "new-transaction" */ "@/views/newTransaction");
+const transactionDetail = () =>
+  import(
+    /* webpackChunkName: "transaction-detail" */ "@/views/transaction-detail"
+  );
 export {
   HomePage,
   Login,
@@ -23,4 +27,5 @@ export {
   Report,
   Budget,
   newTransaction,
+  transactionDetail,
 };
